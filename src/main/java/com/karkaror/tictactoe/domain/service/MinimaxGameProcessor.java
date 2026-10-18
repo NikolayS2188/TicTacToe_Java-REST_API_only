@@ -4,12 +4,15 @@ import com.karkaror.tictactoe.domain.model.Game;
 import com.karkaror.tictactoe.domain.model.GameField;
 import com.karkaror.tictactoe.domain.util.GameRules;
 
+import org.springframework.stereotype.Component;
+
 import static com.karkaror.tictactoe.domain.common.DomainConstants.*;
 
 /**
  * Реализация GameProcessor на основе алгоритма Минимакс с альфа-бета отсечением.
  * Вычисляет оптимальный ход для компьютера (игрок 2).
  */
+@Component
 public class MinimaxGameProcessor implements GameProcessor {
 
     @Override
@@ -46,17 +49,7 @@ public class MinimaxGameProcessor implements GameProcessor {
             return game;
         }
 
-        return game.withMove(bestRow, bestCol, PLAYER2);
-    }
-
-    @Override
-    public boolean isValidMove(Game game, int row, int col, int playerId) {
-        // Проверяем, что игра не окончена, координаты в пределах, клетка пуста
-        if (game.isGameOver()) return false;
-        if (row < 0 || row >= ROWS || col < 0 || col >= COLUMNS) return false;
-        GameField field = game.getCopyField();
-        Integer[][] matrix = field.getMatrix();
-        return matrix[row][col] == EMPTY;
+        return game.withMove(bestRow, bestCol, game.getPlayer2Id());
     }
 
     @Override

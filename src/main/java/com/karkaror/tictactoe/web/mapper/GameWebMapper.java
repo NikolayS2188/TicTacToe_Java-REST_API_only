@@ -14,60 +14,49 @@ public class GameWebMapper {
 
     /**
      * Преобразует доменное поле в веб-поле.
+     * @param domainField доменное поле
+     * @return веб-поле
      */
     public GameFieldWeb toWebField(GameField domainField) {
         return new GameFieldWeb(domainField.getMatrix());
     }
 
     /**
-     * Преобразует веб-поле в доменное поле.
-     */
-    public GameField toDomainField(GameFieldWeb webField) {
-        GameField field = new GameField();
-        Integer[][] matrix = webField.getMatrix();
-        for (int i = 0; i < matrix.length; i++) {
-            for (int j = 0; j < matrix[i].length; j++) {
-                if (matrix[i][j] != null) {
-                    field.setPosition(i, j, matrix[i][j]);
-                }
-            }
-        }
-        return field;
-    }
-
-    /**
-     * Преобразует доменную игру в веб-игру.
-     */
-    public GameStateResponse toWebGame(Game domainGame) {
-        return new GameStateResponse(
-                domainGame.getId(),
-                toWebField(domainGame.getCopyField()),
-                getStatusString(domainGame),
-                null
-        );
-    }
-
-    /**
-     * Преобразует объект Game в DTO ответа.
-     * @param domainGame доменная модель игры
-     * @return DTO для отправки клиенту
+     * Преобразует доменную игру в ответ.
+     * @param domainGame доменная игра
+     * @return ответ с состоянием игры
      */
     public GameStateResponse toResponse(Game domainGame) {
+        if (domainGame == null) {
+            return new GameStateResponse(null, null, "ERROR", null, null, null);
+        }
         return new GameStateResponse(
                 domainGame.getId(),
                 toWebField(domainGame.getCopyField()),
-                getStatusString(domainGame),
+                domainGame.getStatus().name(),
+                domainGame.getCurrentPlayerId(),
+                domainGame.getWinnerId(),
                 null
         );
     }
 
-    private String getStatusString(Game game) {
-        if (!game.isGameOver()) {
-            return "IN_PROGRESS";
+    /**
+     * Преобразует доменную игру в ответ с сообщением.
+     * @param domainGame доменная игра
+     * @param message сообщение
+     * @return ответ с состоянием игры и сообщением
+     */
+    public GameStateResponse toResponse(Game domainGame, String message) {
+        if (domainGame == null) {
+            return new GameStateResponse(null, null, "ERROR", null, null, message);
         }
-        int winner = game.getWinner();
-        if (winner == 1) return "WIN_PLAYER";
-        if (winner == 2) return "WIN_COMPUTER";
-        return "DRAW";
+        return new GameStateResponse(
+                domainGame.getId(),
+                toWebField(domainGame.getCopyField()),
+                domainGame.getStatus().name(),
+                domainGame.getCurrentPlayerId(),
+                domainGame.getWinnerId(),
+                message
+        );
     }
 }

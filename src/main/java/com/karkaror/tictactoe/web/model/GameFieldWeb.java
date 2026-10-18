@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Arrays;
 
+import static com.karkaror.tictactoe.domain.common.DomainConstants.COLUMNS;
+import static com.karkaror.tictactoe.domain.common.DomainConstants.ROWS;
+
 /**
  * DTO для игрового поля в веб-слое.
  * Содержит только данные, без логики.
@@ -13,14 +16,14 @@ public class GameFieldWeb {
 
     @JsonCreator
     public GameFieldWeb(@JsonProperty("matrix") Integer[][] matrix) {
-        this.matrix = matrix != null ? matrix : new Integer[3][3];
+        this.matrix = matrix != null ? matrix : new Integer[ROWS][COLUMNS];
     }
 
     public Integer[][] getMatrix() {
         // Возвращаем копию для неизменяемости
-        Integer[][] copy = new Integer[3][3];
-        for (int i = 0; i < 3; i++) {
-            System.arraycopy(matrix[i], 0, copy[i], 0, 3);
+        Integer[][] copy = new Integer[ROWS][COLUMNS];
+        for (int i = 0; i < ROWS; i++) {
+            System.arraycopy(matrix[i], 0, copy[i], 0, COLUMNS);
         }
         return copy;
     }

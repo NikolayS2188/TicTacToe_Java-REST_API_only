@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:18
+    container_name: tictactoe_db
+    environment:
+      POSTGRES_DB: tictactoe_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"   # Внешний 5433, внутренний 5432
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
