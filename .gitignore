@@ -130,21 +130,87 @@ Mkfile.old
 Makefile.old
 dkms.conf
 
-# конфигурации IDEA
+# конфигурации IntelliJ IDEA
 **/.idea/
 *.iml
 *.ipr
 *.iws
+**/.idea_modules/
+**/atlassian-ide-plugin.xml
+
+# конфигурации Eclipse
+**/.settings/
+.project
+.classpath
+.factorypath
+
+# конфигурации VS Code
+**/.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# конфигурации NetBeans
+**/nbproject/private/
+**/nbbuild/
+**/dist/
+**/nbdist/
+**/.nb-gradle/
 
 # Сгенерированные в JRE (которые ранее не указаны)
 **/target/
-**/build/
 **/out/
 *.class
-
-# Системные файлы
-.DS_Store
-Thumbs.db
+*.war
+*.ear
+*.nar
+hs_err_pid*
+replay_pid*
+.gradle/
+**/build/
+gradle-app.setting
+.gradletasknamecache
+!gradle/wrapper/gradle-wrapper.jar
+!gradle/wrapper/gradle-wrapper.properties
 
 # Логи
 *.log
+**/logs/
+
+# Локальные конфигурации / секреты
+application-local.properties
+application-dev.properties
+application-prod.properties
+*-secrets.properties
+.env
+.env.local
+.env.*.local
+
+# DB
+*.sqlite
+*.db
+
+# Docker
+*.pid
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+.directory
+
+# Прочее
+*.tmp
+*.bak
+*.swp
+*.swo
